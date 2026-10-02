@@ -1,0 +1,94 @@
+import java.util.Scanner;
+class QueueImplementation {
+	int n = 5;
+	int[] queue = new int[n];
+	int[] priority = new int[n];
+	int front = -1;
+	int rear = -1;
+	void enqueue(Scanner in) {
+		if(rear==n-1) {
+			System.out.println("Queue overflow");
+		}
+		else{
+		System.out.println("enter a value:");
+		int val = in.nextInt();
+		System.out.println("enter the priority:");
+		int pri = in.nextInt();
+		if(front==-1) {
+			front = 0;
+			rear = 0;
+        queue[rear] = val;
+        priority[rear] = pri;
+		}
+		else{
+		    int i = rear;
+		    while(i>=0 && !(pri>priority[i])){
+		        queue[i+1] = queue[i];
+		        priority[i+1] = priority[i];
+		         i--;
+		    }
+		   queue[i+1] = val;
+		   priority[i+1] = pri;
+		   rear++;
+		}
+		}
+	}
+    
+    void dequeue(){
+       if(front==-1){
+           System.out.println("Queue underflow");
+       }       
+       else{
+           System.out.println("deleted value:"+queue[front]);
+           for(int i=front;i<rear;i++){
+               queue[i] = queue[i+1];
+               priority[i] = priority[i+1];
+           }
+           queue[rear] = 0;
+           priority[rear] = 0;
+           rear--;
+           if(rear==-1){
+               front=-1;
+           }
+       }
+    }	
+    
+    void display(){
+        if(front==-1 && rear==-1){
+            System.out.println("No values are entered");
+        }
+        else{
+        for(int i=front;i<=rear;i++){
+            System.out.println("value:"+queue[i]);
+            System.out.println("priority:"+priority[i]);
+        }
+        }
+    }
+
+}
+public class Main
+{
+	public static void main(String[] args) {
+	    Scanner in = new Scanner(System.in);
+		QueueImplementation qe = new QueueImplementation();
+	    while(true){
+	        System.out.println("1)enqueue\n2)dequeue\n3)display");
+	        System.out.println("Enter your choice:");
+	        int choice = in.nextInt();
+	        switch(choice){
+	            case 1:{
+	                qe.enqueue(in);
+	                break;
+	            }
+	            case 2:{
+	                qe.dequeue();
+	                break;
+	            }
+	            case 3:{
+	                qe.display();
+	                break;
+	            }
+	        }
+	    }		
+	}
+}
